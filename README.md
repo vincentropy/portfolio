@@ -7,6 +7,8 @@ I wanted to create with a minimalist but flexible layout design that works on bo
 ## Stack in this project
 
 - React
-  -
 - MUI
--
+- github pages
+- github CI/CD
+- react-markdown
+  - some custom parsing of markdown to create preview cards

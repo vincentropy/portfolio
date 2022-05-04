@@ -1,0 +1,31 @@
+name: Node.js - Test and Deploy
+
+on:
+  push:
+    branches:
+     - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+        cache: 'npm'
+    - run: npm install
+
+    - name: Test Stage
+      run: npm test
+
+    - name: Build Stage
+      run: npm build
+      
+    - name: Deploy to github pages
+      uses: JamesIves/github-pages-deploy-action@v4.3.3
+      with:
+        branch: gh-pages
+        publish_dir: ./build
