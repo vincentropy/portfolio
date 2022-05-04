@@ -24,7 +24,6 @@ export function firstParText(tree: Root) {
   ) as Paragraph[];
 
   if (paragraphNodes.length === 0) return '';
-  console.log(paragraphNodes);
 
   const textNodes = paragraphNodes[0].children.filter(
     (value) => value.type === 'text',

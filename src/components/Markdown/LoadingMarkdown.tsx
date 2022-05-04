@@ -16,5 +16,10 @@ export function LoadingMarkdown(props: { name: string }) {
     populate();
   }, [props.name]);
 
-  return <MarkdownCard markdown={data} />;
+  return (
+    <>
+      {data === '' ? '' : <div data-testid="data-ready" />}
+      <MarkdownCard markdown={data} />
+    </>
+  );
 }

@@ -1,4 +1,3 @@
-// import React from 'react';
 import { getImages, listAllNodes, firstParText } from './markdown.utils';
 import { remark } from 'remark';
 

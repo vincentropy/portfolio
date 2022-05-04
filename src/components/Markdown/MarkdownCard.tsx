@@ -28,8 +28,6 @@ export function MarkdownCard(props: { markdown: string }) {
     populate();
   }, [props.markdown]);
 
-  console.log(state.text);
-
   return (
     <Grid container columns={state.image ? 12 : 6}>
       {state.image && (
