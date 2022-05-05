@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react';
-import { loadIndex, Page } from '../../api';
+import { loadIndex, IndexData } from '../../api';
 import { LoadingMarkdown } from '../Markdown';
 import { Grid, Paper, Stack, Typography } from '@mui/material';
 import { Centered } from '../Centered';
 
-export const title = 'hello';
+export const title = (
+  <>
+    Hello 👋, my name is Vincent.
+    <br />
+    Here are some projects I've worked on.
+  </>
+);
 
 function GridItem(props: { filename: string }) {
   return (
@@ -17,25 +23,35 @@ function GridItem(props: { filename: string }) {
 }
 
 export function App() {
-  const initialData: Page[] = [];
-  const [indexData, setIndexData] = useState(initialData);
+  const [indexData, setIndexData] = useState<IndexData | null>(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     async function populate() {
-      const data = await loadIndex();
-      setIndexData(data);
+      try {
+        const data = await loadIndex();
+        setIndexData(data);
+      } catch (e) {
+        const error = e as Error;
+        console.log(error.message);
+        setError(error.message);
+      }
     }
     populate();
   }, []);
+
+  const items =
+    indexData &&
+    indexData.pages.map((item, index) => (
+      <GridItem filename={item.filename} key={index} />
+    ));
 
   return (
     <Centered>
       <Stack direction="column">
         <Typography variant="h1">{title}</Typography>
         <Grid container alignItems="stretch" direction="row">
-          {indexData.map((item, index) => (
-            <GridItem filename={item.filename} key={index} />
-          ))}
+          {items}
         </Grid>
       </Stack>
     </Centered>
