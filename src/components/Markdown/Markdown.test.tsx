@@ -1,11 +1,7 @@
 // import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { LoadingMarkdown } from '.';
-import { loadMarkdownFile } from '../../api';
+import { MarkdownCard } from '.';
 import { Markdown } from './Markdown';
-
-jest.mock('../../api');
-const mockedLoadMarkdownFile = jest.mocked(loadMarkdownFile);
 
 const testContent = `
 # my first header
@@ -24,16 +20,16 @@ more text
 test('renders markdown', () => {
   render(<Markdown markdown={testContent} />);
   const element = screen.getByText('my first header');
-  
+
   expect(element).toBeInTheDocument();
-  expect(element.tagName).toEqual('H2')
+  expect(element.tagName).toEqual('H2');
 });
 
-test('calls api', async () => {
-  const responseText = testContent;
-  mockedLoadMarkdownFile.mockResolvedValue(responseText);
-  render(<LoadingMarkdown name="test_name" />);
-  await screen.findByTestId("data-ready")
+test('renders preview', async () => {
+  render(<MarkdownCard data={testContent} />);
+  const headerElement = await screen.findByText('my first header');
+  const imgElement = await screen.findByAltText('my image');
 
-  expect(mockedLoadMarkdownFile).toBeCalledTimes(1)
+  expect(headerElement).toBeInTheDocument();
+  expect(imgElement).toBeInTheDocument();
 });

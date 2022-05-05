@@ -1,32 +1,34 @@
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Image } from 'mdast';
 import { ImgHTMLAttributes, useEffect, useState } from 'react';
 import { remark } from 'remark';
 import { Markdown } from './Markdown';
-import { firstParText, getImages } from './markdown.utils';
+import { firstParText, getFirstHeadingText, getImages } from './markdown.utils';
 
 function ImageComponent(props: ImgHTMLAttributes<HTMLImageElement>) {
   return <img alt="" style={{ width: '100%', ...props.style }} {...props} />;
 }
 
 type State = {
+  header: string;
   text: string;
   image?: Image;
 };
 
-export function MarkdownCard(props: { markdown: string }) {
-  const [state, setState] = useState({ image: undefined, text: '' } as State);
+export function MarkdownCard(props: { data: string }) {
+  const [state, setState] = useState({ header: '', text: '' } as State);
 
   useEffect(() => {
     async function populate() {
-      const parsed = await remark().parse(props.markdown);
+      const parsed = await remark().parse(props.data);
       const images = getImages(parsed);
       const image = images.length ? images[0] : undefined;
+      const header = getFirstHeadingText(parsed);
       const text = firstParText(parsed);
-      setState({ text, image });
+      setState({ header, text, image });
     }
     populate();
-  }, [props.markdown]);
+  }, [props.data]);
 
   return (
     <Grid container columns={state.image ? 12 : 6}>
@@ -39,6 +41,7 @@ export function MarkdownCard(props: { markdown: string }) {
         </Grid>
       )}
       <Grid item xs={6}>
+        <Typography variant="h2">{state.header}</Typography>
         <Markdown markdown={state.text} />
       </Grid>
     </Grid>
