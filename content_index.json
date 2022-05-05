@@ -1,1 +1,8 @@
-{"pages":[{"filename":"aboutme.md"},{"filename":"open-source.md"},{"filename":"what-is-this.md"}], "title":"👋"}
+{
+  "pages": [
+    { "filename": "aboutme.md" },
+    { "filename": "open-source.md" },
+    { "filename": "what-is-this.md" }
+  ],
+  "title": "👋"
+}
