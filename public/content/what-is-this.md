@@ -1,6 +1,4 @@
-# Markdown example 3
+# About this portfolio
 
-Here is a markdown file with emojii bullets:  
-:fuelpump:: Some text.  
-:construction:: more text  
-:smiley:: even more text
+This portfolio page build using a miniature CMS that I made. Content can be writen in markdown. UI in React.
+[Checkout the code on github.](https://github.com/vincentropy/portfolio)
