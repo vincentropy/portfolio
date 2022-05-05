@@ -20,6 +20,11 @@ jobs:
 
     - name: Test Stage
       run: npm run test
+    
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        CC_TEST_REPORTER_ID: 2166e115d696f569fac3fb43ff180ec86d58bf356e51ab45b44f65edfb9f4954
 
     - name: Build Stage
       run: npm run build
