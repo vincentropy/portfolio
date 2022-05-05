@@ -24,7 +24,6 @@ function GridItem(props: { filename: string }) {
 
 export function App() {
   const [indexData, setIndexData] = useState<IndexData | null>(null);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     async function populate() {
@@ -34,7 +33,6 @@ export function App() {
       } catch (e) {
         const error = e as Error;
         console.log(error.message);
-        setError(error.message);
       }
     }
     populate();
