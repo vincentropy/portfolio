@@ -34,7 +34,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write \"src/**/*.ts(x)?\"  \"**/*.md\"" 
+    "format": "prettier --write \"src/**/*.ts(x)?\"  \"**/*.md\"",
+    "build-cli": "tsc --outDir ./bin ./src/cli.ts",
+    "create-index": "node ./bin/cli.js"
   },
   "eslintConfig": {
     "extends": [
@@ -56,5 +58,8 @@
   },
   "jest": {
     "transformIgnorePatterns": []
+  },
+  "devDependencies": {
+    "ts-node": "^10.7.0"
   }
 }
