@@ -1,3 +1,2 @@
-import { createParser } from './commands';
-
+import {createParser} from './commands'
 createParser().parseSync();

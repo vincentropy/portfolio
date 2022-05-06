@@ -3,6 +3,7 @@
   "homepage": "https://vincentropy.github.io/portfolio/",
   "version": "0.1.0",
   "private": true,
+  "type":"module",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -37,8 +38,8 @@
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.ts(x)?\"  \"**/*.md\"",
-    "build-cli": "tsc --outDir ./bin ./src/cli.ts",
-    "create-index": "node ./bin/cli.js"
+    "build-cli": "tsc --target ES6  --moduleResolution node --module esnext --outDir ./bin ./src/cli/cli.ts",
+    "create-index": "./vcli create-index"
   },
   "eslintConfig": {
     "extends": [

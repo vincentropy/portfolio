@@ -1,29 +1,45 @@
 import * as fs from 'fs';
-// const yargs = require('yargs/yargs')
-import yargs from 'yargs';
+import yargs, { CommandModule } from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { remark } from 'remark';
+
+const indexCommand: CommandModule = {
+  command: 'create-index [path] [file]',
+  aliases: ['ci'],
+  builder: (yargs) =>
+    yargs
+      .positional('path', {
+        describe: 'Path to md files.',
+        type: 'string',
+        default: './public/content',
+      })
+      .positional('file', {
+        describe: 'Output file.',
+        type: 'string',
+        default: './public/content_index.json',
+      }),
+  handler: (argv) => {
+    createIndex(argv.path as string, argv.file as string);
+  },
+};
+
+const printTreeCommand: CommandModule = {
+  command: 'print-tree <file>',
+  aliases: ['pt'],
+  builder: (yargs) =>
+    yargs.positional('file', {
+      describe: 'Input markdown file.',
+      type: 'string',
+    }),
+  handler: (argv) => {
+    printMdastTree(argv.file as string);
+  },
+};
 
 export function createParser() {
   const parser = yargs(hideBin(process.argv))
-    .command({
-      command: 'create-index [path] [file]',
-      aliases: ['ci'],
-      builder: (yargs) =>
-        yargs
-          .positional('path', {
-            describe: 'Path to md files.',
-            type: 'string',
-            default: './public/content',
-          })
-          .positional('file', {
-            describe: 'Output file.',
-            type: 'string',
-            default: './public/content_index.json',
-          }),
-      handler: (argv) => {
-        createIndex(argv.path as string, argv.file as string);
-      },
-    })
+    .command(indexCommand)
+    .command(printTreeCommand)
     .demandCommand(1)
     .help()
     .wrap(72);
@@ -41,4 +57,10 @@ export function createIndex(mdPath: string, outFilePath: string) {
   outputData['title'] = '';
   const outString = JSON.stringify(outputData);
   fs.writeFileSync(outFilePath, outString);
+}
+
+export function printMdastTree(filename: string) {
+  const data = fs.readFileSync(filename);
+  const parsed = remark().parse(data);
+  parsed.children.forEach((child) => console.log(child));
 }
