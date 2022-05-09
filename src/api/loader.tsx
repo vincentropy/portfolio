@@ -1,8 +1,8 @@
 import { ComponentType, useEffect, useState } from 'react';
 
-export function withLoader<P, D>(
+export function withLoader<P extends { data: D |null}, D>(
   Component: ComponentType<P>,
-  loaderFunction: (url: string) => D,
+  loaderFunction: (url: string) => Promise<D>,
 ) {
   return (hocProps: Omit<P, 'data'> & { url: string }) => {
     const { url, ...passThroughProps } = { ...hocProps };
@@ -21,6 +21,6 @@ export function withLoader<P, D>(
       populate();
     }, [url]);
 
-    return <Component {...(passThroughProps as unknown as P)} data={data} />;
+    return <Component {...({ data, ...passThroughProps } as unknown as P)} />;
   };
 }

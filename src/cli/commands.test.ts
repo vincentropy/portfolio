@@ -10,9 +10,11 @@ test('parser is created', () => {
 });
 
 test('create index reads md files', () => {
+  // console.log = jest.fn()
   mockedRead.mockReturnValue(['filename.md' as unknown as Dirent]);
   cli.createIndex('A', 'B');
   expect(mockedRead).toBeCalled();
   expect(mockedwrite).toBeCalled();
+  // expect(console.log).toBeCalled()
   // expect(cli.createParser()).toThrowError()
 });

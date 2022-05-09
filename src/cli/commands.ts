@@ -1,7 +1,8 @@
 import * as fs from 'fs';
+import { remark } from 'remark';
 import yargs, { CommandModule } from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { remark } from 'remark';
+import { fetchIconsCommand } from './fetch-icons';
 
 const indexCommand: CommandModule = {
   command: 'create-index [path] [file]',
@@ -40,6 +41,7 @@ export function createParser() {
   const parser = yargs(hideBin(process.argv))
     .command(indexCommand)
     .command(printTreeCommand)
+    .command(fetchIconsCommand)
     .demandCommand(1)
     .help()
     .wrap(72);

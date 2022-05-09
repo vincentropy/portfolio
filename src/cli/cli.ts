@@ -1,2 +1,2 @@
 import {createParser} from './commands'
-createParser().parseSync();
+createParser().parseAsync();

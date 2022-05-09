@@ -9,7 +9,7 @@ const TestComponent = (props: { data: string; other: number }) => (
 );
 
 test('loader returns function', () => {
-  const LoadingDiv = api.withLoader(TestComponent, api.loadIndex);
+  const LoadingDiv = api.withLoader(TestComponent, api.loadMarkdownFile);
 
   expect(LoadingDiv).toBeInstanceOf(Function);
 });
