@@ -20,7 +20,7 @@ export function IconLink(props: IconLinkProps) {
   const useIcon = !types.map((type) => type === Image).includes(true)
 
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+    <span style={{ display: 'inline-flex', alignItems: 'center', verticalAlign:'bottom' }}>
       {href && useIcon && (
         <img
           src={iconLocation}
