@@ -1,8 +1,8 @@
-import { Grid, Paper } from '@mui/material';
+import Masonry from '@mui/lab/Masonry';
+import { Paper } from '@mui/material';
 import { IndexData, loadMarkdownFile } from '../api';
 import { withLoader } from '../api/loader';
 import { MarkdownCard } from './Markdown/MarkdownCard';
-import Masonry from '@mui/lab/Masonry';
 
 const LoadingMarkdown = withLoader(MarkdownCard, loadMarkdownFile);
 

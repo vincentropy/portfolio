@@ -1,18 +1,17 @@
 import { Grid, Skeleton } from '@mui/material';
-import { Image } from 'mdast';
-import { ImgHTMLAttributes, useEffect, useState } from 'react';
-import { remark } from 'remark';
+// import { Image } from 'mdast';
+// import { ImgHTMLAttributes } from 'react';
 import { Markdown } from './Markdown';
-import { getHeadingImage, shorten } from './markdown.utils';
+import { shorten } from './markdown.utils';
 
-function ImageComponent(props: ImgHTMLAttributes<HTMLImageElement>) {
-  return <img alt="" style={{ width: '100%', filter:"grayscale(100%)", ...props.style }} {...props} />;
-}
+// function ImageComponent(props: ImgHTMLAttributes<HTMLImageElement>) {
+//   return <img alt="" style={{ width: '100%', filter:"grayscale(100%)", ...props.style }} {...props} />;
+// }
 
-type State = {
-  // text: string;
-  image?: Image;
-};
+// type State = {
+//   // text: string;
+//   image?: Image;
+// };
 
 export function MarkdownCardSkeleton() {
   return (

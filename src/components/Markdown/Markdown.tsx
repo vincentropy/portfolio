@@ -1,11 +1,10 @@
 import { Typography, TypographyProps, TypographyVariant } from '@mui/material';
-import { ImgHTMLAttributes } from 'react';
+import {Image} from '../Image'
 import ReactMarkdown from 'react-markdown';
 import remarkGemoji from 'remark-gemoji';
+import { IconLink } from '../IconLink';
 
-function Image(props: ImgHTMLAttributes<HTMLImageElement>) {
-  return <img alt="" style={{ maxWidth: '100%', ...props.style }} {...props} />;
-}
+
 
 export function typographyFactory(variant: TypographyVariant) {
   return (props: TypographyProps) => (
@@ -28,6 +27,7 @@ const componentMap = {
   ...headerMap,
   p: typographyFactory('body1'),
   img: Image,
+  a: IconLink,
 };
 
 export function Markdown(props: { markdown: string }) {

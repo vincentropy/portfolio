@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { promises as fs } from 'fs';
+import fs from 'fs/promises';
 import { Link } from 'mdast';
 import path from 'path';
 import { remark } from 'remark';
 import { CommandModule } from 'yargs';
 import { getByType } from '../components/Markdown/markdown.utils';
+import { urlToHost } from '../util';
 
 export const fetchIconsCommand: CommandModule = {
   command: 'fetch-icons',
@@ -40,13 +41,21 @@ export async function getLinksFromText(markdown: string) {
   return getByType(tree, 'link');
 }
 
+async function fileExists(path: string): Promise<boolean> {
+  return Boolean(await fs.stat(path).catch((e) => false));
+}
+
 export async function fetchIcon(domain: string, targetPath: string) {
+  const targetFile = path.join(targetPath, domain + '.png');
+
+  if (await fileExists(targetFile)) return false;
+
   const response = await axios.get(`https://icon.horse/icon/${domain}`, {
     responseType: 'arraybuffer',
   });
   if (response.status !== 200) return false;
-  // console.log(response.data)
-  await fs.writeFile(path.join(targetPath, domain + '.png'), response.data);
+  await fs.writeFile(targetFile, response.data);
+
   return true;
 }
 
@@ -81,11 +90,14 @@ export async function fetchIcons(
   }
 
   const allLinks = await getLinksFromPath(mdPath);
-  const validUrls = allLinks.map(value=> value.url).filter((value:string) => value.includes("://"))
-  console.log(validUrls);
-  
-  const domains = [...new Set(validUrls.map((link) => new URL(link).host))];
+  const domains = allLinks.map((value) => value.url).map(urlToHost);
+  const uniqueDomains = [
+    ...new Set(domains.filter((host: string) => host !== '')),
+  ];
 
-  await Promise.all(domains.map((domain) => fetchIcon(domain, targetPath)));
+  await Promise.all(
+    uniqueDomains.map((domain) => fetchIcon(domain, targetPath)),
+  );
+
   console.log('done.');
 }
