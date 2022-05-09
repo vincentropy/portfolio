@@ -17,7 +17,7 @@ const LoadingCardGrid = withLoader(CardGrid, loadIndex);
 export function App() {
   return (
     <Centered>
-      <Stack direction="column">
+      <Stack direction="column" width={'100%'} spacing={2} margin={2}>
         <Typography variant="h1">{title}</Typography>
         <LoadingCardGrid url="/content_index.json" />
       </Stack>
