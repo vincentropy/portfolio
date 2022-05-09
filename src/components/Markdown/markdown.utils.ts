@@ -26,6 +26,16 @@ export function getHeadings(tree: Root) {
   return getByType(tree, 'heading') as Heading[];
 }
 
+export function getHeadingImage(tree: Root) {
+  const headingNodes = getHeadings(tree);
+  for (const node of headingNodes) {
+    for (const childNode of node.children) {
+      if (childNode.type === 'image') return childNode as Image;
+    }
+  }
+  return undefined;
+}
+
 export function getFirstHeadingText(tree: Root) {
   const headingNodes = getHeadings(tree);
   if (headingNodes.length === 0) return '';
@@ -45,4 +55,21 @@ export function firstParText(tree: Root) {
   ) as Text[];
 
   return textNodes.map((x) => x.value).join('\n\n');
+}
+
+export function shorten(markdown: string, maxChars: number): string {
+  let charCounter = 0;
+  if (markdown.length < maxChars) return markdown;
+
+  const lines = markdown.split('\n');
+  let numLinesToReturn = 1;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    charCounter += line.replace(/\]\(.*\)/, '').length;
+    if (charCounter > maxChars) {
+      break;
+    }
+    numLinesToReturn += 1;
+  }
+  return lines.slice(0, numLinesToReturn).join('\n');
 }
