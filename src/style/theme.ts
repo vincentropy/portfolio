@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme, GlobalStylesProps } from '@mui/material';
 
 export const theme = createTheme({
   typography: {
@@ -28,3 +28,12 @@ export const theme = createTheme({
     },
   },
 });
+
+export const globalStyles: GlobalStylesProps = {
+  styles: {
+    body: {
+      background:
+        'linear-gradient(45deg, rgba(228,228,255,1) 50%, rgba(205,246,255,1) 100%)',
+    },
+  },
+};
