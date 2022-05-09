@@ -1,7 +1,7 @@
-import * as fetchIcons from './fetch-icons';
-import fs from 'fs/promises';
 import axios from 'axios';
-import { Dirent, Stats } from 'fs';
+import { Dirent } from 'fs';
+import fs from 'fs/promises';
+import * as fetchIcons from './fetch-icons';
 
 // jest.mock('fs');
 jest.mock('fs/promises');
