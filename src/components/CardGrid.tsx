@@ -1,59 +1,40 @@
 import Masonry from '@mui/lab/Masonry';
-import { Paper } from '@mui/material';
+import { Box } from '@mui/material';
 import { IndexData, loadMarkdownFile } from '../api';
 import { withLoader } from '../api/loader';
 import { MarkdownCard } from './Markdown/MarkdownCard';
 
 const LoadingMarkdown = withLoader(MarkdownCard, loadMarkdownFile);
 
-// function GridItem(props: { filename: string }) {
-//   return (
-//     <Grid item xs={4}>
-//       <Paper sx={{ height: '100%', margin:0, maxWidth:"400px"}}>
-//         <LoadingMarkdown url={props.filename} />
-//       </Paper>
-//     </Grid>
-//   );
-// }
+function GridItem(props: { filename?: string; tall?: boolean }) {
+  return (
+    <div>
+      {props.filename ? (
+        <LoadingMarkdown url={props.filename} tall={props.tall} />
+      ) : (
+        <MarkdownCard tall={props.tall} />
+      )}
+    </div>
+  );
+}
 
-// export function CardGrid(props: { data: IndexData | null }) {
-//   const { data } = { ...props };
-//   const items =
-//     data &&
-//     data.pages.map((item, index) => (
-//       <GridItem filename={item.filename} key={index} />
-//     ));
+export function CardGrid(props: { data?: IndexData }) {
+  const { data } = { ...props };
 
-//   return (
-//     <Grid container>
-//       {items}
-//     </Grid>
-//   );
-// }
+  const items =
+    data &&
+    data.pages.map((item, index) => (
+      <GridItem filename={item.filename} tall={item.tall} key={index} />
+    ));
 
-
-function GridItem(props: { filename: string }) {
-    return (
-      <div>
-        <Paper sx={{ height: '100%', margin:0, maxWidth:"400px", width:'100%'}}>
-          <LoadingMarkdown url={props.filename} />
-        </Paper>
-      </div>
-    );
-  }
-  
-  export function CardGrid(props: { data: IndexData | null }) {
-    const { data } = { ...props };
-    const items =
-      data &&
-      data.pages.map((item, index) => (
-        <GridItem filename={item.filename} key={index} />
-      ));
-
-    
-    return !items? <div/> : (
-      <Masonry columns={{xs:1, sm:2, md:3}} style={{width:'100%'}} spacing={2}>
-        {items}
+  return (
+    <Box
+      width={{ xs: 330, sm: 330 * 2 + 16 * 2, lg: 330 * 3 + 16 * 3 }}
+      margin="auto"
+    >
+      <Masonry columns={{ xs: 1, sm: 2, lg: 3 }} spacing={2}>
+        {items || []}
       </Masonry>
-    );
-  }
+    </Box>
+  );
+}

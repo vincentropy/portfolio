@@ -1,59 +1,130 @@
-import { Grid, Skeleton } from '@mui/material';
-// import { Image } from 'mdast';
-// import { ImgHTMLAttributes } from 'react';
+import { Box, Fade, Grid, Paper, Skeleton, Typography } from '@mui/material';
+import { Image, Root } from 'mdast';
+import { useEffect, useState } from 'react';
+import { remark } from 'remark';
+import { toMarkdown } from 'mdast-util-to-markdown';
 import { Markdown } from './Markdown';
-import { shorten } from './markdown.utils';
+import * as utils from './markdown.utils';
 
-// function ImageComponent(props: ImgHTMLAttributes<HTMLImageElement>) {
-//   return <img alt="" style={{ width: '100%', filter:"grayscale(100%)", ...props.style }} {...props} />;
-// }
+export const MarkdownCardSkeleton = ({ tall }: { tall?: boolean }) => {
+  return (
+    <Box margin={1}>
+      {tall ? (
+        <Skeleton
+          animation="wave"
+          height={'300px'}
+          variant="rectangular"
+          sx={{ marginBottom: '2rem' }}
+        />
+      ) : (
+        <Grid
+          container
+          sx={{ width: '100%' }}
+          columns={12}
+          alignItems="center"
+          spacing={1}
+        >
+          <Grid item xs={4}>
+            <Skeleton animation="wave" height={'8rem'} />
+          </Grid>
+          <Grid item xs={8}>
+            <Skeleton animation="wave" height={'2rem'} />
+            <Skeleton animation="wave" height={'2rem'} />
+          </Grid>
+        </Grid>
+      )}
+      <Skeleton animation="wave" />
+      <Skeleton animation="wave" />
+      <Skeleton animation="wave" />
+      <Skeleton animation="wave" />
+      <Skeleton animation="wave" />
+    </Box>
+  );
+};
 
-// type State = {
-//   // text: string;
-//   image?: Image;
-// };
+const CardImage = ({ image }: { image: Image }) => (
+  <img
+    src={image.url}
+    alt={image.alt || ''}
+    style={{ height: '300px', minWidth: '100%' }}
+  />
+);
 
-export function MarkdownCardSkeleton() {
+const CardHeading = ({ heading }: { heading: string }) => (
+  <Typography
+    variant="h2"
+    sx={{
+      paddingTop: 2,
+      paddingLeft: 2,
+      paddingRight: 2,
+    }}
+  >
+    {heading}
+  </Typography>
+);
+
+const CardContents = (props: {
+  heading?: string;
+  image?: Image;
+  filteredMarkdown?: string;
+}) => (
+  <>
+    {props.image && <CardImage image={props.image} />}
+    {props.heading && <CardHeading heading={props.heading} />}
+    {props.filteredMarkdown && (
+      <Box margin={2}>
+        <Markdown markdown={utils.shorten(props.filteredMarkdown, 600)} />
+      </Box>
+    )}
+  </>
+);
+
+type State = { heading?: string; image?: Image; filteredMarkdown?: string };
+
+export function MarkdownCard(props: { data?: string; tall?: boolean }) {
+  const [state, setState] = useState<State>({});
+
+  useEffect(() => {
+    const populate = async () => {
+      if (!props.data) return;
+      let parsed = await remark().parse(props.data);
+      const newState: State = {};
+
+      const image = utils.getHeadingImage(parsed);
+      if (image) {
+        const { tree } = utils.filterTree(parsed, 'heading', 1);
+        parsed = tree as Root;
+        newState.image = image;
+      }
+      newState.heading = utils.getFirstHeadingText(parsed);
+      const { tree, removed } = utils.filterTree(parsed, 'heading', 1);
+      console.log(newState.heading, tree, parsed, removed);
+
+      parsed = tree as Root;
+
+      newState.filteredMarkdown = toMarkdown(parsed);
+      setState(newState);
+    };
+    populate();
+  }, [props.data]);
+
   return (
     <>
-      <Skeleton animation="wave" />
-      <Skeleton animation="wave" />
-      <Skeleton animation="wave" />
+      <Paper
+        sx={{
+          height: props.tall ? 600 + 16 : 300,
+          width: 330,
+          margin: 'auto',
+          position: 'relative',
+        }}
+      >
+        {!state.filteredMarkdown && <MarkdownCardSkeleton tall={props.tall} />}
+        <Fade key={0} in={state.filteredMarkdown !== undefined} timeout={1000}>
+          <Box>
+            <CardContents {...state} />
+          </Box>
+        </Fade>
+      </Paper>
     </>
-  );
-}
-
-export function MarkdownCard(props: { data: string | null }) {
-  // const [state, setState] = useState<State>({});
-
-  // useEffect(() => {
-  //   async function populate() {
-  //     if (!props.data) return;
-  //     const parsed = await remark().parse(props.data);
-  //     // const shortParsed = await remark().parse(shorten(props.data, 100));
-  //     const image = getHeadingImage(parsed);
-  //     // const header = getFirstHeadingText(parsed);
-  //     // const text = firstParText(parsed);
-  //     setState({ image });
-  //   }
-  //   populate();
-  // }, [props.data]);
-
-  return !props.data ? (
-    <MarkdownCardSkeleton />
-  ) : (
-    <Grid container direction={'column'}>
-      {/* {state.image && (
-        <Grid item >
-          <ImageComponent
-            src={state.image.url}
-            alt={state.image.alt as string}
-          />
-        </Grid>
-      )} */}
-      <Grid item>
-        <Markdown markdown={shorten(props.data, 600)} />
-      </Grid>
-    </Grid>
   );
 }
