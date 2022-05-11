@@ -2,8 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { App } from '.';
 
-test('renders title', () => {
+jest.mock("../../api")
+
+test('renders title', async () => {
   render(<App />);
-  const linkElement = screen.getByText(/Hello/);
+  const linkElement = await screen.findByText(/Hello/);
   expect(linkElement).toBeInTheDocument();
 });
