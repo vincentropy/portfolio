@@ -3,7 +3,7 @@ import {
   GridProps,
   Typography,
   TypographyProps,
-  TypographyVariant
+  TypographyVariant,
 } from '@mui/material';
 import { Children, LiHTMLAttributes } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -24,9 +24,25 @@ export function GridIfMany(props: GridProps & { minItems: number }) {
 
   if (objectChildren.length > props.minItems)
     return (
-      <Grid container children={props.children} columns={2} spacing={0.3} />
+      <Grid
+        container
+        children={props.children}
+        columns={2}
+        spacing={0.3}
+        marginTop={1}
+        marginBottom={1}
+      />
     );
-  return <Grid container children={props.children} columns={1} spacing={0.3} />;
+  return (
+    <Grid
+      container
+      children={props.children}
+      columns={1}
+      spacing={0.3}
+      marginTop={1}
+      marginBottom={1}
+    />
+  );
 }
 // Map MUI typography to markdown components
 const baseMarkdownHeaderLevel = 2;
