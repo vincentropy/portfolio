@@ -1,28 +1,31 @@
 import { createTheme, GlobalStylesProps } from '@mui/material';
 
 export const theme = createTheme({
+  palette: { primary: { main: '#00f' }, secondary: { main: '#6245ac' } },
   typography: {
-    h1: { fontSize: 32 },
+    h1: { fontSize: 32, letterSpacing: 1.2 },
     h2: {
-      fontSize: 24,
+      fontSize: 18,
       fontWeight: 800,
+      letterSpacing: 1.2,
     },
   },
   components: {
     MuiGrid: {
       defaultProps: {
-        spacing: 4,
+        spacing: 2,
         columns: { xs: 4, sm: 8, md: 12 },
       },
     },
     MuiPaper: {
       defaultProps: {
-        elevation: 12,
+        elevation: 0,
       },
       styleOverrides: {
         root: {
           borderRadius: 16,
-          padding: 16,
+          overflow: 'hidden',
+          // padding: 16,
         },
       },
     },

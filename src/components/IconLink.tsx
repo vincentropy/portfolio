@@ -25,7 +25,7 @@ export function IconLink(props: IconLinkProps) {
         <img
           src={iconLocation}
           alt=""
-          style={{ width: '1em', height: '1em', marginRight: '0.2em' }}
+          style={{ width: '1.3em', height: '1.3em', margin: '0.2em' }}
         />
       )}
       <Link {...props} />
