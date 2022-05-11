@@ -1,8 +1,8 @@
 import { Box, Fade, Grid, Paper, Skeleton, Typography } from '@mui/material';
 import { Image, Root } from 'mdast';
+import { toMarkdown } from 'mdast-util-to-markdown';
 import { useEffect, useState } from 'react';
 import { remark } from 'remark';
-import { toMarkdown } from 'mdast-util-to-markdown';
 import { Markdown } from './Markdown';
 import * as utils from './markdown.utils';
 
@@ -97,14 +97,12 @@ export function MarkdownCard(props: { data?: string; tall?: boolean }) {
         newState.image = image;
       }
       newState.heading = utils.getFirstHeadingText(parsed);
-      const { tree, removed } = utils.filterTree(parsed, 'heading', 1);
-      console.log(newState.heading, tree, parsed, removed);
-
+      const { tree } = utils.filterTree(parsed, 'heading', 1);
       parsed = tree as Root;
-
       newState.filteredMarkdown = toMarkdown(parsed);
       setState(newState);
     };
+
     populate();
   }, [props.data]);
 
