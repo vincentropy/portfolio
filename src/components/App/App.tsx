@@ -16,7 +16,6 @@ export function App() {
         direction="column"
         width={'100%'}
         spacing={2}
-        margin={1}
         alignItems="center"
       >
         <div>
