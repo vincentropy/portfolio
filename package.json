@@ -43,7 +43,8 @@
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.ts(x)?\"  \"**/*.md\"",
     "build-cli": "tsc --target es2022  --moduleResolution node --allowSyntheticDefaultImports --module esnext --outDir ./bin ./src/cli/cli.ts",
-    "create-index": "./vcli create-index"
+    "create-index": "./vcli create-index",
+    "fetch-icons": "./vcli fetch-icons --targetPath ./public/icons --mdPath ./public/content/"
   },
   "eslintConfig": {
     "extends": [
