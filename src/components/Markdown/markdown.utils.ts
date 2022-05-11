@@ -73,3 +73,34 @@ export function shorten(markdown: string, maxChars: number): string {
   }
   return lines.slice(0, numLinesToReturn).join('\n');
 }
+
+type FilteredTree = { tree: TreeNode; removed: Content[] };
+/* 
+Remove first @count elements of type @filterType from the tree. 
+Also return removed elements as a list.
+*/
+export function filterTree(
+  tree: TreeNode,
+  filterType: string,
+  count = 1,
+): FilteredTree {
+  const newTree = { ...tree };
+  let removed: Content[] = [];
+  if (!Object.hasOwn(tree, 'children')) return { tree: newTree, removed };
+
+  const parent = newTree as Parent;
+  removed = parent.children.filter((child) => child.type === filterType);
+  const keep = parent.children.filter((child) => child.type !== filterType);
+
+  // if there are more siblings of filterType than count, put them back.
+  keep.push(...removed.slice(count));
+  removed = removed.slice(0, count);
+
+  parent.children = [];
+  for (const child of keep) {
+    const filteredChild = filterTree(child, filterType, count - removed.length);
+    parent.children.push(filteredChild.tree as Content);
+    removed.push(...filteredChild.removed);
+  }
+  return { tree: newTree, removed };
+}

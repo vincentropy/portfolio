@@ -1,4 +1,9 @@
-import { getImages, listAllNodes, firstParText } from './markdown.utils';
+import {
+  getImages,
+  listAllNodes,
+  firstParText,
+  filterTree,
+} from './markdown.utils';
 import { remark } from 'remark';
 
 const testContent = `
@@ -56,4 +61,35 @@ test('unformatted one-line returns its self', async () => {
   const text = firstParText(tree);
 
   expect(text).toEqual(testText);
+});
+
+test('filterTree removes element from tree', async () => {
+  const tree = await remark().parse(testContent);
+
+  const filtered = filterTree(tree, 'image', 1);
+  const unfilteredNodeList = listAllNodes(tree);
+  const filteredNodeList = listAllNodes(filtered.tree);
+
+  expect(filteredNodeList.length).toEqual(
+    unfilteredNodeList.length - filtered.removed.length,
+  );
+});
+
+test('filterTree removes the correct type', async () => {
+  const tree = await remark().parse(testContent);
+
+  const filtered = filterTree(tree, 'image', 100);
+  const filteredNodeList = listAllNodes(filtered.tree);
+
+  expect(filteredNodeList.filter((node)=>node.type==='image')).toHaveLength(0)
+  expect(filtered.removed).toHaveLength(2)
+});
+
+test('filterTree limits to @count nodes', async () => {
+  const tree = await remark().parse(testContent);
+  const count=1
+
+  const filtered = filterTree(tree, 'image', count);
+
+  expect(filtered.removed).toHaveLength(count)
 });
