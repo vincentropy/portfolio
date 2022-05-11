@@ -5,9 +5,28 @@ export const theme = createTheme({
   typography: {
     h1: { fontSize: 32, letterSpacing: 1.2 },
     h2: {
-      fontSize: 18,
-      fontWeight: 800,
-      letterSpacing: 1.2,
+      fontSize: 22,
+      fontWeight: 600,
+      letterSpacing: 1.5,
+      fontFamily: [
+        'Narifah',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      
+    },
+    body1: {
+      fontFamily: [
+        'Cedora',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      fontWeight: 400,
+      // letterSpacing: 1.05,
     },
   },
   components: {
