@@ -3,11 +3,9 @@ import { createTheme, GlobalStylesProps } from '@mui/material';
 export const theme = createTheme({
   palette: { primary: { main: '#00f' }, secondary: { main: '#6245ac' } },
   typography: {
-    h1: { fontSize: 32, letterSpacing: 1.2 },
-    h2: {
-      fontSize: 22,
-      fontWeight: 600,
-      letterSpacing: 1.5,
+    h1: {
+      fontSize: 32,
+      letterSpacing: 1.3,
       fontFamily: [
         'Narifah',
         'sans-serif',
@@ -15,7 +13,18 @@ export const theme = createTheme({
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
       ].join(','),
-      
+    },
+    h2: {
+      fontSize: 22,
+      fontWeight: 600,
+      letterSpacing: 1.3,
+      fontFamily: [
+        'Narifah',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
     },
     body1: {
       fontFamily: [

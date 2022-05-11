@@ -23,9 +23,9 @@ export function App() {
           <Typography variant="h1" textAlign={'center'}>
             {title}
           </Typography>
-          <Typography variant="subtitle1" textAlign={'center'}>
+          {/* <Typography variant="subtitle1" textAlign={'center'}>
             {subtitle}
-          </Typography>
+          </Typography> */}
         </div>
         <LoadingCardGrid url="/content_index.json" />
       </Stack>
