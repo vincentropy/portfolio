@@ -1,4 +1,4 @@
-# Tech I like to work with
+# Tech I work with
 
 - [React](https://reactjs.org) 
 - [Typescript](https://www.typescriptlang.org/)
@@ -8,7 +8,6 @@
 - [Express](https://expressjs.com/)
 - [Python](https://python.org) 
 - [Django RF](https://www.django-rest-framework.org/)
-- [Pandas](https://pandas.pydata.org/)
 - [PyTorch](https://pytorch.org/)
 - [Scikit Learn](https://scikit-learn.org/)
 - [AWS](https://aws.amazon.com/)
