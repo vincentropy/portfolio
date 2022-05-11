@@ -1,1 +1,12 @@
-{"pages":[{"filename":"aboutme.md"},{"filename":"open-source.md"},{"filename":"recent-experience.md"},{"filename":"skills.md"},{"filename":"swyg.md"},{"filename":"what-is-this.md"}],"title":""}
+{
+  "pages": [
+    { "filename": "aboutme.md", "tall": true },
+    { "filename": "open-source.md" },
+    { "filename": "recent-experience.md" },
+    { "filename": "skills.md" },
+    { "filename": "python_tutorial.md", "tall": true },
+    { "filename": "swyg.md" },
+    { "filename": "what-is-this.md" }
+  ],
+  "title": ""
+}
