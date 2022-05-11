@@ -1,6 +1,6 @@
 import { ComponentType, useEffect, useState } from 'react';
 
-export function withLoader<P extends { data: D |null}, D>(
+export function withLoader<P extends { data?: D }, D>(
   Component: ComponentType<P>,
   loaderFunction: (url: string) => Promise<D>,
 ) {
