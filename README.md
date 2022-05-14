@@ -8,7 +8,7 @@
 This portfolio showcases recent projects I've been working on.
 It's a miniature CMS with content written in markdown and UI in React/MUI.
 
-**[Live version on github pages](https://vincentropy.github.io/portfolio/)**
+**[Live version on github pages](https://portfolio.vincentropy.com)**
 
 ## Design requirements
 
